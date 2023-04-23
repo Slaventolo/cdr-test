@@ -90,7 +90,7 @@ public class CallDataRecord {
             }
         }
     }*/
-    public void generateCDR() {
+    public List<CallRecord> generateCDR() {
         monthSetup();// Изменение статической переменной месяца на +1.
         List<CallRecord> callRecords = new ArrayList<>();//Создается ArrayList звонков
         //Берутся все телефоны, чей баланс больше нуля. Ведь зачем создавать звонки для тех, у кого баланс меньше 0. Они же не могут звонить?
@@ -112,7 +112,8 @@ public class CallDataRecord {
         }
 
         Collections.sort(callRecords); //Сортировка записей, чтобы они были в порядке совершения звонка
-        callRecordRepository.saveAll(callRecords);// сохранение всех записей в бд
+        return callRecords;
+        //callRecordRepository.saveAll(callRecords);// сохранение всех записей в бд
     }
 
 
@@ -122,7 +123,7 @@ public class CallDataRecord {
         return random.nextBoolean() ? CallType.INCOMING : CallType.OUTGOING;
     }
 
-    private static int getRandomDuration() {
+    public static int getRandomDuration() {
         Random random = new Random();
         return random.nextInt(3600) + 1; // звонок длится от 1 секунды до 60 минут
     }
